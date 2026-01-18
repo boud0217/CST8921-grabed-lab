@@ -28,6 +28,6 @@ The linear regression model was trained using the specified dataset and evaluate
 Overall, the model shows promise for predicting prices based on the selected features, but further tuning and validation may be necessary to enhance its performance.
 
 ## Findings
-1. Feature Selection: The choice of features significantly impacts the model's performance. Including relevant features such as location, size, and age of the property improved prediction accuracy.
+1. Feature Selection: The choice of features significantly impacts the model's performance. Including relevant features improved prediction accuracy.
 2. Data Quality: Handling missing data through the "Split data" component was crucial for maintaining the integrity of the dataset and ensuring reliable model training.
 3. Model Evaluation: The evaluation metrics provided insights into the model's strengths and weaknesses, guiding future improvements.
