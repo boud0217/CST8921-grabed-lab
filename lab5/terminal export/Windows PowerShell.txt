@@ -1,0 +1,690 @@
+PS C:\git\blobprocessor> az group create --name rg-serverless-lab --location eastus2
+{
+  "id": "/subscriptions/234cbca9-c842-48e3-801b-a52827130eb1/resourceGroups/rg-serverless-lab",
+  "location": "eastus2",
+  "managedBy": null,
+  "name": "rg-serverless-lab",
+  "properties": {
+    "provisioningState": "Succeeded"
+  },
+  "tags": null,
+  "type": "Microsoft.Resources/resourceGroups"
+}
+PS C:\git\blobprocessor> az storage account create --name cst8921lab5 --resource-group rg-serverless-lab --location eastus2 --sku Standard_LRS
+The --min-tls-version argument values TLS1_0 and TLS1_1 have been retired on 2026/02/03 and will be removed on 2026/03/03.
+{
+  "accessTier": "Hot",
+  "accountMigrationInProgress": null,
+  "allowBlobPublicAccess": false,
+  "allowCrossTenantReplication": false,
+  "allowSharedKeyAccess": null,
+  "allowedCopyScope": null,
+  "azureFilesIdentityBasedAuthentication": null,
+  "blobRestoreStatus": null,
+  "creationTime": "2026-02-14T23:12:28.003546+00:00",
+  "customDomain": null,
+  "defaultToOAuthAuthentication": null,
+  "dnsEndpointType": null,
+  "dualStackEndpointPreference": null,
+  "enableExtendedGroups": null,
+  "enableHttpsTrafficOnly": true,
+  "enableNfsV3": null,
+  "encryption": {
+    "encryptionIdentity": null,
+    "keySource": "Microsoft.Storage",
+    "keyVaultProperties": null,
+    "requireInfrastructureEncryption": null,
+    "services": {
+      "blob": {
+        "enabled": true,
+        "keyType": "Account",
+        "lastEnabledTime": "2026-02-14T23:12:28.362917+00:00"
+      },
+      "file": {
+        "enabled": true,
+        "keyType": "Account",
+        "lastEnabledTime": "2026-02-14T23:12:28.362917+00:00"
+      },
+      "queue": null,
+      "table": null
+    }
+  },
+  "extendedLocation": null,
+  "failoverInProgress": null,
+  "geoPriorityReplicationStatus": null,
+  "geoReplicationStats": null,
+  "id": "/subscriptions/234cbca9-c842-48e3-801b-a52827130eb1/resourceGroups/rg-serverless-lab/providers/Microsoft.Storage/storageAccounts/cst8921lab5",
+  "identity": null,
+  "immutableStorageWithVersioning": null,
+  "isHnsEnabled": null,
+  "isLocalUserEnabled": null,
+  "isSftpEnabled": null,
+  "isSkuConversionBlocked": null,
+  "keyCreationTime": {
+    "key1": "2026-02-14T23:12:28.347292+00:00",
+    "key2": "2026-02-14T23:12:28.347292+00:00"
+  },
+  "keyPolicy": null,
+  "kind": "StorageV2",
+  "largeFileSharesState": null,
+  "lastGeoFailoverTime": null,
+  "location": "eastus2",
+  "minimumTlsVersion": "TLS1_0",
+  "name": "cst8921lab5",
+  "networkRuleSet": {
+    "bypass": "AzureServices",
+    "defaultAction": "Allow",
+    "ipRules": [],
+    "ipv6Rules": [],
+    "resourceAccessRules": null,
+    "virtualNetworkRules": []
+  },
+  "placement": null,
+  "primaryEndpoints": {
+    "blob": "https://cst8921lab5.blob.core.windows.net/",
+    "dfs": "https://cst8921lab5.dfs.core.windows.net/",
+    "file": "https://cst8921lab5.file.core.windows.net/",
+    "internetEndpoints": null,
+    "ipv6Endpoints": null,
+    "microsoftEndpoints": null,
+    "queue": "https://cst8921lab5.queue.core.windows.net/",
+    "table": "https://cst8921lab5.table.core.windows.net/",
+    "web": "https://cst8921lab5.z20.web.core.windows.net/"
+  },
+  "primaryLocation": "eastus2",
+  "privateEndpointConnections": [],
+  "provisioningState": "Succeeded",
+  "publicNetworkAccess": null,
+  "resourceGroup": "rg-serverless-lab",
+  "routingPreference": null,
+  "sasPolicy": null,
+  "secondaryEndpoints": null,
+  "secondaryLocation": null,
+  "sku": {
+    "name": "Standard_LRS",
+    "tier": "Standard"
+  },
+  "statusOfPrimary": "available",
+  "statusOfSecondary": null,
+  "storageAccountSkuConversionStatus": null,
+  "tags": {},
+  "type": "Microsoft.Storage/storageAccounts",
+  "zones": null
+}
+PS C:\git\blobprocessor> az functionapp create --resource-group rg-serverless-lab --name ProcessBlobUpload --storage-account cst8921lab5 --consumption-plan-location eastus2 --runtime python --runtime-version 3.12 --os-type linux
+No functions version specified so defaulting to 4.
+Website with given name ProcessBlobUpload already exists.
+PS C:\git\blobprocessor> az functionapp list -o table
+
+PS C:\git\blobprocessor> az functionapp show --name ProcessBlobUpload --resource-group rg-serverless-lab --query id -o tsv
+Not Found({"error":{"code":"ResourceNotFound","message":"The Resource 'Microsoft.Web/sites/ProcessBlobUpload' under resource group 'rg-serverless-lab' was not found. For more details please go to https://aka.ms/ARMResourceNotFoundFix"}})
+PS C:\git\blobprocessor> az functionapp create --resource-group rg-serverless-lab --name ProcessBlobUpload --storage-account cst8921lab5 --consumption-plan-location eastus2 --runtime python --runtime-version 3.12 --os-type linux
+No functions version specified so defaulting to 4.
+Website with given name ProcessBlobUpload already exists.
+PS C:\git\blobprocessor> az functionapp create --resource-group rg-serverless-lab --name ProcessBlobUpload01 --storage-account cst8921lab5 --consumption-plan-location eastus2 --runtime python --runtime-version 3.12 --os-type linux
+No functions version specified so defaulting to 4.
+Your Linux function app 'ProcessBlobUpload01', that uses a consumption plan has been successfully created but is not active until content is published using Azure Portal or the Functions Core Tools.
+Application Insights "ProcessBlobUpload01" was created for this Function App. You can visit https://portal.azure.com/#resource/subscriptions/234cbca9-c842-48e3-801b-a52827130eb1/resourceGroups/rg-serverless-lab/providers/microsoft.insights/components/ProcessBlobUpload01/overview to view your Application Insights component
+{
+  "autoGeneratedDomainNameLabelScope": null,
+  "availabilityState": "Normal",
+  "clientAffinityEnabled": false,
+  "clientAffinityPartitioningEnabled": null,
+  "clientAffinityProxyEnabled": false,
+  "clientCertEnabled": false,
+  "clientCertExclusionPaths": null,
+  "clientCertMode": "Required",
+  "cloningInfo": null,
+  "containerSize": 0,
+  "customDomainVerificationId": "F073DE3260C1A0E401A9EB2D2F12BD3812B52578620C2183002E74C3A25A90E2",
+  "dailyMemoryTimeQuota": 0,
+  "daprConfig": null,
+  "defaultHostName": "processblobupload01.azurewebsites.net",
+  "dnsConfiguration": {
+    "dnsAltServer": null,
+    "dnsLegacySortOrder": null,
+    "dnsMaxCacheTimeout": null,
+    "dnsRetryAttemptCount": null,
+    "dnsRetryAttemptTimeout": null,
+    "dnsServers": null
+  },
+  "enabled": true,
+  "enabledHostNames": [
+    "processblobupload01.azurewebsites.net",
+    "processblobupload01.scm.azurewebsites.net"
+  ],
+  "endToEndEncryptionEnabled": false,
+  "extendedLocation": null,
+  "functionAppConfig": null,
+  "hostNameSslStates": [
+    {
+      "certificateResourceId": null,
+      "hostType": "Standard",
+      "ipBasedSslResult": null,
+      "ipBasedSslState": "NotConfigured",
+      "name": "processblobupload01.azurewebsites.net",
+      "sslState": "Disabled",
+      "thumbprint": null,
+      "toUpdate": null,
+      "toUpdateIpBasedSsl": null,
+      "virtualIPv6": null,
+      "virtualIp": null
+    },
+    {
+      "certificateResourceId": null,
+      "hostType": "Repository",
+      "ipBasedSslResult": null,
+      "ipBasedSslState": "NotConfigured",
+      "name": "processblobupload01.scm.azurewebsites.net",
+      "sslState": "Disabled",
+      "thumbprint": null,
+      "toUpdate": null,
+      "toUpdateIpBasedSsl": null,
+      "virtualIPv6": null,
+      "virtualIp": null
+    }
+  ],
+  "hostNames": [
+    "processblobupload01.azurewebsites.net"
+  ],
+  "hostNamesDisabled": false,
+  "hostingEnvironmentProfile": null,
+  "httpsOnly": false,
+  "hyperV": false,
+  "id": "/subscriptions/234cbca9-c842-48e3-801b-a52827130eb1/resourceGroups/rg-serverless-lab/providers/Microsoft.Web/sites/ProcessBlobUpload01",
+  "identity": null,
+  "inProgressOperationId": null,
+  "ipMode": "IPv4",
+  "isDefaultContainer": null,
+  "isXenon": false,
+  "keyVaultReferenceIdentity": "SystemAssigned",
+  "kind": "functionapp,linux",
+  "lastModifiedTimeUtc": "2026-02-14T23:16:45.190000",
+  "location": "eastus2",
+  "managedEnvironmentId": null,
+  "maxNumberOfWorkers": null,
+  "name": "ProcessBlobUpload01",
+  "outboundIpAddresses": "52.252.22.155,20.62.18.64,52.179.234.0,52.179.234.1,52.179.237.99,52.179.237.148,20.49.97.17",
+  "outboundVnetRouting": {
+    "allTraffic": false,
+    "applicationTraffic": false,
+    "backupRestoreTraffic": false,
+    "contentShareTraffic": false,
+    "imagePullTraffic": false,
+    "managedIdentityTraffic": false
+  },
+  "possibleOutboundIpAddresses": "52.252.22.155,20.62.18.64,52.179.234.0,52.179.234.1,52.179.237.99,52.179.237.148,52.252.23.246,52.253.64.47,52.253.64.124,52.253.64.125,52.253.65.84,52.253.65.85,52.254.103.240,52.253.65.92,52.253.65.93,52.177.89.135,52.253.69.207,52.253.69.240,52.167.19.211,52.177.147.229,40.65.238.53,52.177.147.249,20.44.83.102,52.177.148.19,20.49.97.17",
+  "publicNetworkAccess": "Enabled",
+  "redundancyMode": "None",
+  "repositorySiteName": "ProcessBlobUpload01",
+  "reserved": true,
+  "resourceConfig": null,
+  "resourceGroup": "rg-serverless-lab",
+  "scmSiteAlsoStopped": false,
+  "serverFarmId": "/subscriptions/234cbca9-c842-48e3-801b-a52827130eb1/resourceGroups/rg-serverless-lab/providers/Microsoft.Web/serverfarms/EastUS2LinuxDynamicPlan",
+  "siteConfig": {
+    "acrUseManagedIdentityCreds": false,
+    "acrUserManagedIdentityId": null,
+    "alwaysOn": false,
+    "antivirusScanEnabled": null,
+    "apiDefinition": null,
+    "apiManagementConfig": null,
+    "appCommandLine": null,
+    "appSettings": null,
+    "autoHealEnabled": null,
+    "autoHealRules": null,
+    "autoSwapSlotName": null,
+    "azureMonitorLogCategories": null,
+    "azureStorageAccounts": null,
+    "clusteringEnabled": false,
+    "connectionStrings": null,
+    "cors": null,
+    "customAppPoolIdentityAdminState": null,
+    "customAppPoolIdentityTenantState": null,
+    "defaultDocuments": null,
+    "detailedErrorLoggingEnabled": null,
+    "documentRoot": null,
+    "elasticWebAppScaleLimit": null,
+    "experiments": null,
+    "fileChangeAuditEnabled": null,
+    "ftpsState": null,
+    "functionAppScaleLimit": 0,
+    "functionsRuntimeScaleMonitoringEnabled": null,
+    "handlerMappings": null,
+    "healthCheckPath": null,
+    "http20Enabled": false,
+    "http20ProxyFlag": null,
+    "httpLoggingEnabled": null,
+    "ipSecurityRestrictions": [
+      {
+        "action": "Allow",
+        "description": "Allow all access",
+        "headers": null,
+        "ipAddress": "Any",
+        "name": "Allow all",
+        "priority": 2147483647,
+        "subnetMask": null,
+        "subnetTrafficTag": null,
+        "tag": null,
+        "vnetSubnetResourceId": null,
+        "vnetTrafficTag": null
+      }
+    ],
+    "ipSecurityRestrictionsDefaultAction": null,
+    "javaContainer": null,
+    "javaContainerVersion": null,
+    "javaVersion": null,
+    "keyVaultReferenceIdentity": null,
+    "limits": null,
+    "linuxFxVersion": "",
+    "loadBalancing": null,
+    "localMySqlEnabled": null,
+    "logsDirectorySizeLimit": null,
+    "machineKey": null,
+    "managedPipelineMode": null,
+    "managedServiceIdentityId": null,
+    "metadata": null,
+    "minTlsCipherSuite": null,
+    "minTlsVersion": null,
+    "minimumElasticInstanceCount": 0,
+    "netFrameworkVersion": null,
+    "nodeVersion": null,
+    "numberOfWorkers": 1,
+    "phpVersion": null,
+    "powerShellVersion": null,
+    "preWarmedInstanceCount": null,
+    "publicNetworkAccess": null,
+    "publishingPassword": null,
+    "publishingUsername": null,
+    "push": null,
+    "pythonVersion": null,
+    "remoteDebuggingEnabled": null,
+    "remoteDebuggingVersion": null,
+    "requestTracingEnabled": null,
+    "requestTracingExpirationTime": null,
+    "routingRules": null,
+    "runtimeADUser": null,
+    "runtimeADUserPassword": null,
+    "sandboxType": null,
+    "scmIpSecurityRestrictions": [
+      {
+        "action": "Allow",
+        "description": "Allow all access",
+        "headers": null,
+        "ipAddress": "Any",
+        "name": "Allow all",
+        "priority": 2147483647,
+        "subnetMask": null,
+        "subnetTrafficTag": null,
+        "tag": null,
+        "vnetSubnetResourceId": null,
+        "vnetTrafficTag": null
+      }
+    ],
+    "scmIpSecurityRestrictionsDefaultAction": null,
+    "scmIpSecurityRestrictionsUseMain": null,
+    "scmMinTlsCipherSuite": null,
+    "scmMinTlsVersion": null,
+    "scmSupportedTlsCipherSuites": null,
+    "scmType": null,
+    "sitePort": null,
+    "sitePrivateLinkHostEnabled": null,
+    "storageType": null,
+    "supportedTlsCipherSuites": null,
+    "tracingOptions": null,
+    "use32BitWorkerProcess": null,
+    "virtualApplications": null,
+    "vnetName": null,
+    "vnetPrivatePortsCount": null,
+    "vnetRouteAllEnabled": null,
+    "webJobsEnabled": false,
+    "webSocketsEnabled": null,
+    "websiteTimeZone": null,
+    "winAuthAdminState": null,
+    "winAuthTenantState": null,
+    "windowsConfiguredStacks": null,
+    "windowsFxVersion": null,
+    "xManagedServiceIdentityId": null
+  },
+  "sku": "Dynamic",
+  "slotSwapStatus": null,
+  "sshEnabled": null,
+  "state": "Running",
+  "storageAccountRequired": false,
+  "suspendedTill": null,
+  "tags": null,
+  "targetSwapSlot": null,
+  "trafficManagerHostNames": null,
+  "type": "Microsoft.Web/sites",
+  "usageState": "Normal",
+  "virtualNetworkSubnetId": null,
+  "workloadProfileName": null
+}
+PS C:\git\blobprocessor> az eventgrid event-subscription create --name blob-created-sub --source-resource-id "/subscriptions/234cbca9-c842-48e3-801b-a52827130eb1/resourceGroups/rg-serverless-lab/providers/Microsoft.Storage/storageAccounts/cst8921lab5" --endpoint-type azurefunction --endpoint "/subscriptions/234cbca9-c842-48e3-801b-a52827130eb1/resourceGroups/rg-serverless-lab/providers/Microsoft.Web/sites/ProcessBlobUpload01/functions/ProcessBlobUpload01" --included-event-types Microsoft.Storage.BlobCreated --event-delivery-schema EventGridSchema
+(Endpoint validation) Destination endpoint not found. Resource details: resourceId: /subscriptions/234cbca9-c842-48e3-801b-a52827130eb1/resourceGroups/rg-serverless-lab/providers/Microsoft.Web/sites/ProcessBlobUpload01/functions/ProcessBlobUpload01. Resource should pre-exist before attempting this operation. Activity id:ac02d6fb-1331-416f-bd51-884ad69faa74, timestamp: 2/14/2026 11:17:54 PM (UTC).
+Code: Endpoint validation
+Message: Destination endpoint not found. Resource details: resourceId: /subscriptions/234cbca9-c842-48e3-801b-a52827130eb1/resourceGroups/rg-serverless-lab/providers/Microsoft.Web/sites/ProcessBlobUpload01/functions/ProcessBlobUpload01. Resource should pre-exist before attempting this operation. Activity id:ac02d6fb-1331-416f-bd51-884ad69faa74, timestamp: 2/14/2026 11:17:54 PM (UTC).
+PS C:\git\blobprocessor> az functionapp show `
+>>   --name ProcessBlobUpload01 `
+>>   --resource-group rg-serverless-lab
+{
+  "appServicePlanId": "/subscriptions/234cbca9-c842-48e3-801b-a52827130eb1/resourceGroups/rg-serverless-lab/providers/Microsoft.Web/serverfarms/EastUS2LinuxDynamicPlan",
+  "autoGeneratedDomainNameLabelScope": null,
+  "availabilityState": "Normal",
+  "clientAffinityEnabled": false,
+  "clientAffinityPartitioningEnabled": null,
+  "clientAffinityProxyEnabled": false,
+  "clientCertEnabled": false,
+  "clientCertExclusionPaths": null,
+  "clientCertMode": "Required",
+  "cloningInfo": null,
+  "containerSize": 0,
+  "customDomainVerificationId": "F073DE3260C1A0E401A9EB2D2F12BD3812B52578620C2183002E74C3A25A90E2",
+  "dailyMemoryTimeQuota": 0,
+  "daprConfig": null,
+  "defaultHostName": "processblobupload01.azurewebsites.net",
+  "dnsConfiguration": {
+    "dnsAltServer": null,
+    "dnsLegacySortOrder": null,
+    "dnsMaxCacheTimeout": null,
+    "dnsRetryAttemptCount": null,
+    "dnsRetryAttemptTimeout": null,
+    "dnsServers": null
+  },
+  "enabled": true,
+  "enabledHostNames": [
+    "processblobupload01.azurewebsites.net",
+    "processblobupload01.scm.azurewebsites.net"
+  ],
+  "endToEndEncryptionEnabled": false,
+  "extendedLocation": null,
+  "ftpPublishingUrl": "ftps://waws-prod-bn1-107.ftp.azurewebsites.windows.net/site/wwwroot",
+  "functionAppConfig": null,
+  "hostNameSslStates": [
+    {
+      "certificateResourceId": null,
+      "hostType": "Standard",
+      "ipBasedSslResult": null,
+      "ipBasedSslState": "NotConfigured",
+      "name": "processblobupload01.azurewebsites.net",
+      "sslState": "Disabled",
+      "thumbprint": null,
+      "toUpdate": null,
+      "toUpdateIpBasedSsl": null,
+      "virtualIPv6": null,
+      "virtualIp": null
+    },
+    {
+      "certificateResourceId": null,
+      "hostType": "Repository",
+      "ipBasedSslResult": null,
+      "ipBasedSslState": "NotConfigured",
+      "name": "processblobupload01.scm.azurewebsites.net",
+      "sslState": "Disabled",
+      "thumbprint": null,
+      "toUpdate": null,
+      "toUpdateIpBasedSsl": null,
+      "virtualIPv6": null,
+      "virtualIp": null
+    }
+  ],
+  "hostNames": [
+    "processblobupload01.azurewebsites.net"
+  ],
+  "hostNamesDisabled": false,
+  "hostingEnvironmentProfile": null,
+  "httpsOnly": false,
+  "hyperV": false,
+  "id": "/subscriptions/234cbca9-c842-48e3-801b-a52827130eb1/resourceGroups/rg-serverless-lab/providers/Microsoft.Web/sites/ProcessBlobUpload01",
+  "identity": null,
+  "inProgressOperationId": null,
+  "ipMode": "IPv4",
+  "isDefaultContainer": null,
+  "isXenon": false,
+  "keyVaultReferenceIdentity": "SystemAssigned",
+  "kind": "functionapp,linux",
+  "lastModifiedTimeUtc": "2026-02-14T23:17:54.270000",
+  "location": "East US 2",
+  "managedEnvironmentId": null,
+  "maxNumberOfWorkers": null,
+  "name": "ProcessBlobUpload01",
+  "outboundIpAddresses": "52.252.22.155,20.62.18.64,52.179.234.0,52.179.234.1,52.179.237.99,52.179.237.148,20.49.97.17",
+  "outboundVnetRouting": {
+    "allTraffic": false,
+    "applicationTraffic": false,
+    "backupRestoreTraffic": false,
+    "contentShareTraffic": false,
+    "imagePullTraffic": false,
+    "managedIdentityTraffic": false
+  },
+  "possibleOutboundIpAddresses": "52.252.22.155,20.62.18.64,52.179.234.0,52.179.234.1,52.179.237.99,52.179.237.148,52.252.23.246,52.253.64.47,52.253.64.124,52.253.64.125,52.253.65.84,52.253.65.85,52.254.103.240,52.253.65.92,52.253.65.93,52.177.89.135,52.253.69.207,52.253.69.240,52.167.19.211,52.177.147.229,40.65.238.53,52.177.147.249,20.44.83.102,52.177.148.19,20.49.97.17",
+  "publicNetworkAccess": "Enabled",
+  "redundancyMode": "None",
+  "repositorySiteName": "ProcessBlobUpload01",
+  "reserved": true,
+  "resourceConfig": null,
+  "resourceGroup": "rg-serverless-lab",
+  "scmSiteAlsoStopped": false,
+  "siteConfig": {
+    "acrUseManagedIdentityCreds": false,
+    "acrUserManagedIdentityId": null,
+    "alwaysOn": false,
+    "apiDefinition": null,
+    "apiManagementConfig": null,
+    "appCommandLine": "",
+    "appSettings": null,
+    "autoHealEnabled": false,
+    "autoHealRules": null,
+    "autoSwapSlotName": null,
+    "azureStorageAccounts": {},
+    "connectionStrings": null,
+    "cors": null,
+    "defaultDocuments": [
+      "Default.htm",
+      "Default.html",
+      "Default.asp",
+      "index.htm",
+      "index.html",
+      "iisstart.htm",
+      "default.aspx",
+      "index.php"
+    ],
+    "detailedErrorLoggingEnabled": false,
+    "documentRoot": null,
+    "elasticWebAppScaleLimit": null,
+    "experiments": {
+      "rampUpRules": []
+    },
+    "ftpsState": "FtpsOnly",
+    "functionAppScaleLimit": 200,
+    "functionsRuntimeScaleMonitoringEnabled": false,
+    "handlerMappings": null,
+    "healthCheckPath": null,
+    "http20Enabled": true,
+    "http20ProxyFlag": 0,
+    "httpLoggingEnabled": false,
+    "id": "/subscriptions/234cbca9-c842-48e3-801b-a52827130eb1/resourceGroups/rg-serverless-lab/providers/Microsoft.Web/sites/ProcessBlobUpload01/config/web",
+    "ipSecurityRestrictions": [
+      {
+        "action": "Allow",
+        "description": "Allow all access",
+        "headers": null,
+        "ipAddress": "Any",
+        "name": "Allow all",
+        "priority": 2147483647,
+        "subnetMask": null,
+        "subnetTrafficTag": null,
+        "tag": null,
+        "vnetSubnetResourceId": null,
+        "vnetTrafficTag": null
+      }
+    ],
+    "ipSecurityRestrictionsDefaultAction": null,
+    "javaContainer": null,
+    "javaContainerVersion": null,
+    "javaVersion": null,
+    "keyVaultReferenceIdentity": null,
+    "kind": null,
+    "limits": null,
+    "linuxFxVersion": "Python|3.12",
+    "loadBalancing": "LeastRequests",
+    "localMySqlEnabled": false,
+    "location": "East US 2",
+    "logsDirectorySizeLimit": 35,
+    "machineKey": null,
+    "managedPipelineMode": "Integrated",
+    "managedServiceIdentityId": null,
+    "metadata": null,
+    "minTlsCipherSuite": null,
+    "minTlsVersion": "1.2",
+    "minimumElasticInstanceCount": 0,
+    "name": "ProcessBlobUpload01",
+    "netFrameworkVersion": "v4.0",
+    "nodeVersion": "",
+    "numberOfWorkers": 1,
+    "phpVersion": "",
+    "powerShellVersion": "",
+    "preWarmedInstanceCount": 0,
+    "publicNetworkAccess": null,
+    "publishingUsername": "REDACTED",
+    "push": null,
+    "pythonVersion": "",
+    "remoteDebuggingEnabled": false,
+    "remoteDebuggingVersion": null,
+    "requestTracingEnabled": false,
+    "requestTracingExpirationTime": null,
+    "resourceGroup": "rg-serverless-lab",
+    "scmIpSecurityRestrictions": [
+      {
+        "action": "Allow",
+        "description": "Allow all access",
+        "headers": null,
+        "ipAddress": "Any",
+        "name": "Allow all",
+        "priority": 2147483647,
+        "subnetMask": null,
+        "subnetTrafficTag": null,
+        "tag": null,
+        "vnetSubnetResourceId": null,
+        "vnetTrafficTag": null
+      }
+    ],
+    "scmIpSecurityRestrictionsDefaultAction": null,
+    "scmIpSecurityRestrictionsUseMain": false,
+    "scmMinTlsVersion": "1.2",
+    "scmType": "None",
+    "tracingOptions": null,
+    "type": "Microsoft.Web/sites/config",
+    "use32BitWorkerProcess": false,
+    "virtualApplications": [
+      {
+        "physicalPath": "site\\wwwroot",
+        "preloadEnabled": false,
+        "virtualDirectories": null,
+        "virtualPath": "/"
+      }
+    ],
+    "vnetName": "",
+    "vnetPrivatePortsCount": 0,
+    "vnetRouteAllEnabled": false,
+    "webSocketsEnabled": false,
+    "websiteTimeZone": null,
+    "windowsFxVersion": null,
+    "xManagedServiceIdentityId": null
+  },
+  "sku": "Dynamic",
+  "slotSwapStatus": null,
+  "sshEnabled": null,
+  "state": "Running",
+  "storageAccountRequired": false,
+  "suspendedTill": null,
+  "tags": null,
+  "targetSwapSlot": null,
+  "trafficManagerHostNames": null,
+  "type": "Microsoft.Web/sites",
+  "usageState": "Normal",
+  "virtualNetworkSubnetId": null,
+  "workloadProfileName": null
+}
+PS C:\git\blobprocessor>
+PS C:\git\blobprocessor> az functionapp function list `
+>>   --name ProcessBlobUpload01 `
+>>   --resource-group rg-serverless-lab `
+>>   -o table
+
+PS C:\git\blobprocessor>
+PS C:\git\blobprocessor> az functionapp function list `
+>>   --name ProcessBlobUpload01 `
+>>   --resource-group rg-serverless-lab `
+>>   -o table
+
+PS C:\git\blobprocessor> az functionapp show `
+>>   --name ProcessBlobUpload01 `
+>>   --resource-group rg-serverless-lab `
+>>   --query state
+"Running"
+PS C:\git\blobprocessor>
+PS C:\git\blobprocessor> az eventgrid event-subscription create --name blob-created-sub --source-resource-id "/subscriptions/234cbca9-c842-48e3-801b-a52827130eb1/resourceGroups/rg-serverless-lab/providers/Microsoft.Storage/storageAccounts/cst8921lab5" --endpoint-type azurefunction --endpoint "/subscriptions/234cbca9-c842-48e3-801b-a52827130eb1/resourceGroups/rg-serverless-lab/providers/Microsoft.Web/sites/ProcessBlobUpload01/functions/ProcessBlobUpload01" --included-event-types Microsoft.Storage.BlobCreated --event-delivery-schema EventGridSchema
+(Endpoint validation) Destination endpoint not found. Resource details: resourceId: /subscriptions/234cbca9-c842-48e3-801b-a52827130eb1/resourceGroups/rg-serverless-lab/providers/Microsoft.Web/sites/ProcessBlobUpload01/functions/ProcessBlobUpload01. Resource should pre-exist before attempting this operation. Activity id:e9e85e39-e095-4a8b-8c64-1d045164f1e3, timestamp: 2/14/2026 11:30:13 PM (UTC).
+Code: Endpoint validation
+Message: Destination endpoint not found. Resource details: resourceId: /subscriptions/234cbca9-c842-48e3-801b-a52827130eb1/resourceGroups/rg-serverless-lab/providers/Microsoft.Web/sites/ProcessBlobUpload01/functions/ProcessBlobUpload01. Resource should pre-exist before attempting this operation. Activity id:e9e85e39-e095-4a8b-8c64-1d045164f1e3, timestamp: 2/14/2026 11:30:13 PM (UTC).
+PS C:\git\blobprocessor> az functionapp function list `
+>>   --name ProcessBlobUpload01 `
+>>   --resource-group rg-serverless-lab `
+>>   -o table
+ConfigHref                                                                                                   Href IsDisabled    Language    Location    Name                                     ResourceGroup      ScriptHref                                                                                 ScriptRootPathHref                                                                              TestData    TestDataHref
+-----------------------------------------------------------------------------------------------------------  --------------------------------------------------------------------------------- ------------  ----------  ----------  ---------------------------------------  -----------------  -----------------------------------------------------------------------------------------  ----------------------------------------------------------------------------------------------  ----------  -------------------------------------------------------------------------------------------------
+https://processblobupload01.azurewebsites.net/admin/vfs/home/site/wwwroot/ProcessBlobUpload01/function.json  https://processblobupload01.azurewebsites.net/admin/functions/ProcessBlobUpload01 False         python      East US 2   ProcessBlobUpload01/ProcessBlobUpload01  rg-serverless-lab  https://processblobupload01.azurewebsites.net/admin/vfs/home/site/wwwroot/function_app.py  https://processblobupload01.azurewebsites.net/admin/vfs/home/site/wwwroot/ProcessBlobUpload01/              https://processblobupload01.azurewebsites.net/admin/vfs/tmp/FunctionsData/ProcessBlobUpload01.dat
+PS C:\git\blobprocessor>
+PS C:\git\blobprocessor> az eventgrid event-subscription create `
+>>   --name blob-created-sub `
+>>   --source-resource-id "/subscriptions/234cbca9-c842-48e3-801b-a52827130eb1/resourceGroups/rg-serverless-lab/providers/Microsoft.Storage/storageAccounts/cst8921lab5" `
+>>   --endpoint-type azurefunction `
+>>   --endpoint "/subscriptions/234cbca9-c842-48e3-801b-a52827130eb1/resourceGroups/rg-serverless-lab/providers/Microsoft.Web/sites/ProcessBlobUpload01/functions/ProcessBlobUpload01" `
+>>   --included-event-types Microsoft.Storage.BlobCreated `
+>>   --event-delivery-schema EventGridSchema
+{
+  "deadLetterDestination": null,
+  "deadLetterWithResourceIdentity": null,
+  "deliveryWithResourceIdentity": null,
+  "destination": {
+    "deliveryAttributeMappings": null,
+    "endpointType": "AzureFunction",
+    "maxEventsPerBatch": 1,
+    "preferredBatchSizeInKilobytes": 64,
+    "resourceId": "/subscriptions/234cbca9-c842-48e3-801b-a52827130eb1/resourceGroups/rg-serverless-lab/providers/Microsoft.Web/sites/ProcessBlobUpload01/functions/ProcessBlobUpload01"
+  },
+  "eventDeliverySchema": "EventGridSchema",
+  "expirationTimeUtc": null,
+  "filter": {
+    "advancedFilters": null,
+    "enableAdvancedFilteringOnArrays": null,
+    "includedEventTypes": [
+      "Microsoft.Storage.BlobCreated"
+    ],
+    "isSubjectCaseSensitive": null,
+    "subjectBeginsWith": "",
+    "subjectEndsWith": ""
+  },
+  "id": "/subscriptions/234cbca9-c842-48e3-801b-a52827130eb1/resourceGroups/rg-serverless-lab/providers/Microsoft.Storage/storageAccounts/cst8921lab5/providers/Microsoft.EventGrid/eventSubscriptions/blob-created-sub",
+  "labels": null,
+  "name": "blob-created-sub",
+  "provisioningState": "Succeeded",
+  "resourceGroup": "rg-serverless-lab",
+  "retryPolicy": {
+    "eventTimeToLiveInMinutes": 1440,
+    "maxDeliveryAttempts": 30
+  },
+  "systemData": null,
+  "topic": "/subscriptions/234cbca9-c842-48e3-801b-a52827130eb1/resourceGroups/rg-serverless-lab/providers/microsoft.storage/storageaccounts/cst8921lab5",
+  "type": "Microsoft.EventGrid/eventSubscriptions"
+}
+PS C:\git\blobprocessor>
+PS C:\git\blobprocessor> az functionapp config appsettings list --name ProcessBlobUpload01 --resource-group rg-serverless-lab -o table
+Name                                   SlotSetting    Value
+-------------------------------------  -------------  ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+FUNCTIONS_WORKER_RUNTIME               False          python
+FUNCTIONS_EXTENSION_VERSION            False          ~4
+AzureWebJobsStorage                    False          DefaultEndpointsProtocol=https;EndpointSuffix=core.windows.net;AccountName=cst8921lab5;AccountKey=TrVlYTxqjBsnTTdBLxsHumBDCz9tLgu+vZj73ASAqRzbyLyVwuNevcWE/uHS24pn1qcMWgnJKa2L+AStt2VkiQ==
+APPLICATIONINSIGHTS_CONNECTION_STRING  False          InstrumentationKey=cd9106e5-c804-470c-98fe-1aeb877403fb;IngestionEndpoint=https://eastus2-3.in.applicationinsights.azure.com/;LiveEndpoint=https://eastus2.livediagnostics.monitor.azure.com/;ApplicationId=613872a3-57ff-4bab-af0a-12f9c580fad5
+PS C:\git\blobprocessor>

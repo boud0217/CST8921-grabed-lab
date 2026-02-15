@@ -10,4 +10,4 @@ We use the portal to insert item in the database. the method describe in the lab
 ![Results-in the program](./images/Screenshot%20(542).png)
 ![command "cosmicworks --endpoint "<endpoint>" --key "<key>" --datasets products" does not work](./images/Screenshot%20(543).png)
 ![Function app creation](./images/Screenshot%20(544).png)
-We were not able to pusue the lab because it is impossible to to create a Azure Cosmos DB-triggered function using the portal. We have tried with vscode but we cannot seed the samples with the command "cosmicworks --endpoint "<endpoint>" --key "<key>" --datasets products".
+We were not able to pursue the lab because it is impossible to to create a Azure Cosmos DB-triggered function using the portal. We have tried with vscode but we cannot seed the samples with the command "cosmicworks --endpoint "<endpoint>" --key "<key>" --datasets products".
